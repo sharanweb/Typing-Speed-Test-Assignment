@@ -11,6 +11,7 @@ export default function App() {
   const [record, setRecord] = useState(0);
 
   let prev_record = localStorage.getItem("score_record");
+  localStorage.setItem("score_record", record);
   // setRecord(prev_record);
 
   function randomIntFromInterval(min, max) {
@@ -51,17 +52,20 @@ export default function App() {
       } else {
         // console.log(prev_record);
         
-        if(timer < prev_record){
-          localStorage.removeItem("score_record");
+        console.log(prev_record)
+        console.log(timer);
+        if(timer > prev_record){
+          // localStorage.removeItem("score_record");
           localStorage.setItem("score_record", timer);
           setRecord(timer);
         }
         timerRef.current = clearInterval(timerRef.current);
         if(timer > prev_record){
-          setValue("GAME OVER");
+          setValue("Failure");
         }else{
           setValue("Success");
         }
+        
         
         setHasGameEnded(true);
       }
@@ -76,7 +80,7 @@ export default function App() {
         value={value}
         timer={timer}
         handleReset={handleReset}
-        recorddata = {prev_record>0 ? prev_record : 0}
+        recorddata = {prev_record>0 ? prev_record : record}
       />
     </div>
   );
